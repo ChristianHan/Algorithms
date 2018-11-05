@@ -1,8 +1,11 @@
 package assignment2;
+
+// feel free to add things to this file. Just don't remove anything
+
 import java.util.*;
 public class Node {
 	
-    private int minDistance;
+  private int minDistance;
 	private int nodeName;
 	private ArrayList<Node> neighbors; 
 	private ArrayList<Integer> weights;

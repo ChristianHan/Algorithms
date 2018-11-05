@@ -63,9 +63,9 @@ public class Driver {
 		String[]  inputSize = sc.nextLine().split(" ");
 		numV = Integer.parseInt(inputSize[0]);
 		numE = Integer.parseInt(inputSize[1]);
-		ArrayList<Integer> tempNames = new ArrayList<Integer>();
+		HashMap<Integer, ArrayList<NeighborWeightTuple>> tempNeighbors = new HashMap<>();
 		testGraph = new Graph(numV);
-		for (int i = 0; i < numV; i++) {
+		for (int i = 0; i < numV; ++i) {
 			
 			String[] pairs = sc.nextLine().split(" ");
 			String[] weightPairs = sc.nextLine().split(" ");
@@ -73,31 +73,47 @@ public class Driver {
 			Integer currNode = Integer.parseInt(pairs[0]);
 			Node currentNode = new Node(currNode);
 			allNodeNames.add(currNode, currentNode);
-			tempNames.add(currNode);
+			ArrayList<NeighborWeightTuple> currNeighbors = new ArrayList<>();
+			tempNeighbors.put(currNode, currNeighbors);
 			
 			for(int k = 1; k < pairs.length; k++) {
 				Integer neighborVal = Integer.parseInt(pairs[k]);
-				Node neighborK;
-				if(!tempNames.contains(neighborVal)) {
-					neighborK = new Node(neighborVal);
-				}
-				else 
-					neighborK = allNodeNames.get(neighborVal);
-				testGraph.setEdge(currentNode, neighborK, Integer.parseInt(weightPairs[k]));
+				Integer weightVal = Integer.parseInt(weightPairs[k]);
+				currNeighbors.add(new NeighborWeightTuple(neighborVal, weightVal));
 			}
-
+		}
+		for (int i = 0; i < allNodeNames.size(); ++i)
+		{
+			Node currNode = allNodeNames.get(i);
+			ArrayList<NeighborWeightTuple> neighbors = tempNeighbors.get(i);
+			for (NeighborWeightTuple neighbor : neighbors)
+			{
+				testGraph.setEdge(currNode, allNodeNames.get(neighbor.neighborID), neighbor.weight);
+			}
 		}
 		
 		testGraph.setAllNodesArray(allNodeNames);
 	}
 	
   public static void testRun() {
-    if (testDijkstra) {
-        System.out.println(testGraph);
-    }
+		if (testDijkstra) {
+			System.out.println(testGraph);
+		}
 
-    if (testHeap) {
-        System.out.println(testGraph.getHeap());
-    }
+		if (testHeap) {
+			System.out.println(testGraph.getHeap());
+		}
 	}
+
+	private static class NeighborWeightTuple {
+		public Integer neighborID;
+		public Integer weight;
+
+		NeighborWeightTuple(Integer neighborID, Integer weight)
+		{
+			this.neighborID = neighborID;
+			this.weight = weight;
+		}
+	}
+
 }
