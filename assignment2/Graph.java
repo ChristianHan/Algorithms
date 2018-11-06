@@ -8,7 +8,7 @@ public class Graph {
 	public Graph(int numVertices) {
 		minHeap = new Heap();
 		vertices = new ArrayList<Node>();
-    // feel free to add anything else you may want	
+    // feel free to add anything else you may want
 	}
 
 
@@ -76,7 +76,14 @@ public class Graph {
 ///////////////////////////////////////////////////////////////////////////////
 
   public Heap getHeap() {
+    Heap minimumHeap = new Heap(vertices.size());
+    minimumHeap.buildHeap(vertices);
+    //return minimumHeap;
+
+    minHeap = minimumHeap;
     return minHeap;
+    //minHeap.buildHeap(vertices);
+    //return minHeap;
   }
     
   public ArrayList<Node> getAllNodes(){
