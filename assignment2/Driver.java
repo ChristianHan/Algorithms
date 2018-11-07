@@ -72,7 +72,7 @@ public class Driver {
 			
 			Integer currNode = Integer.parseInt(pairs[0]);
 			Node currentNode = new Node(currNode);
-			currentNode.setMinDistance(numV - i);/////////////////////////////////////////////////
+			//currentNode.setMinDistance(numV - i);/////////////////////////////////////////////////
 			allNodeNames.add(currNode, currentNode);
 			ArrayList<NeighborWeightTuple> currNeighbors = new ArrayList<>();
 			tempNeighbors.put(currNode, currNeighbors);

@@ -7,20 +7,13 @@ public class Heap {
 
 	private ArrayList<Node> minHeap; // do not remove
 
-
 	public int size;
-	public Node[] minimumHeap;
 
 	public Heap() {
 		minHeap = new ArrayList<Node>(); // do not remove
 		size = 0;
 	}
 
-	public Heap(int numVertices){
-		minHeap = new ArrayList<Node>(numVertices);
-		size = 0;
-		minimumHeap = new Node[numVertices];
-	}
 	////////////////////////////////////////////////////////////////////////////
 
 	public int parent(int i) { //returns the index of i's parent
@@ -51,12 +44,6 @@ public class Heap {
 		return right(i) < size;
 	}
 
-	public void arrayNodeSwap(int i1, int i2) {
-		Node temp = minimumHeap[i1];
-		minimumHeap[i1] = minimumHeap[i2];
-		minimumHeap[i2] = temp;
-	}
-
 	public void nodeSwap(int i1, int i2){
 		Node temp = minHeap.get(i1);
 		minHeap.set(i1, minHeap.get(i2));
@@ -68,10 +55,13 @@ public class Heap {
   // Node's minDistance
   //
   // Time Complexity Requirement: theta(n)
+  // need to call heapify down
 	public void buildHeap(ArrayList<Node> nodes) {
-
-		for(Node n:nodes){
-			insertNode(n);
+		minHeap = nodes;
+		size = minHeap.size();
+		int midpoint = (minHeap.size() - 2) / 2;
+		for(int i = midpoint; i >= 0; i--){
+			heapifyDown(i);
 		}
 	}
 
@@ -80,9 +70,8 @@ public class Heap {
 	public void insertNode(Node in) {
 
 		size = size + 1;
-		int lastIndex = size - 1;
-		minimumHeap[lastIndex] = in;
-		//minHeap.set(lastIndex, in);
+
+		minHeap.add(in);
 
 		heapifyUp();
 	}
@@ -91,51 +80,34 @@ public class Heap {
 
 		int index = size - 1;
 
-		while(hasParent(index) && minimumHeap[parent(index)].getMinDistance() > minimumHeap[index].getMinDistance()){
-			arrayNodeSwap(index,parent(index));
+		while(hasParent(index) && minHeap.get(parent(index)).getMinDistance() > minHeap.get(index).getMinDistance()){
+			nodeSwap(index, parent(index));
 			index = parent(index);
 		}
-
-//		while(hasParent(index) && minHeap.get(parent(index)).getMinDistance() > minHeap.get(index).getMinDistance()){
-//			nodeSwap(index, parent(index));
-//			index = parent(index);
-//		}
 	}
 
   // Returns the minimum element of the heap
   //
   // Time Complexity Requirement: theta(1)
 	public Node findMin() {
-
-		return minimumHeap[0];
-		//return minHeap.get(0);
+		return minHeap.get(0);
 	}
 
-	public void heapifyDown(){
-		int index = 0;
+	public void heapifyDown(int i){
+		int index = i;
 		while(hasLeftChild(index)){
+
 			/* need to find the smaller child from the root index */
 			int smallerChild = left(index);
 
 			/* if the right child is smaller */
-			if(hasRightChild(index) && minimumHeap[right(index)].getMinDistance() < minimumHeap[left(index)].getMinDistance()){
+			if(hasRightChild(index) && minHeap.get(right(index)).getMinDistance() < minHeap.get(left(index)).getMinDistance()){
 				smallerChild = right(index);
 			}
-
-//			if(hasRightChild(index) && minHeap.get(right(index)).getMinDistance() < minHeap.get(left(index)).getMinDistance()){
-//				smallerChild = right(index);
-//			}
-
-			if(minimumHeap[index].getMinDistance() > minimumHeap[smallerChild].getMinDistance()){
-				arrayNodeSwap(index,smallerChild);
+			if(minHeap.get(index).getMinDistance() > minHeap.get(smallerChild).getMinDistance()){
+				nodeSwap(index,smallerChild);
 				index = smallerChild;
 			}
-
-
-//			if(minHeap.get(index).getMinDistance() > minHeap.get(smallerChild).getMinDistance()){
-//				nodeSwap(index,smallerChild);
-//				index = smallerChild;
-//			}
 			else{
 				break;
 			}
@@ -149,22 +121,19 @@ public class Heap {
 
 		Node min = findMin();
 		int lastIndex = size - 1;
-		//minHeap.set(0,minHeap.get(lastIndex));
 
-		minimumHeap[0] = minimumHeap[lastIndex];
+		minHeap.set(0,minHeap.get(lastIndex));
+		minHeap.remove(lastIndex);
 		size = size - 1;
-		heapifyDown();
+		heapifyDown(0);
 
 		return min;
 	}
 	
   public String toString() {
 		String output = "";
-//		for(int i = 0; i < minHeap.size(); i++) {
-//			output+= minHeap.get(i).getNodeName() + " ";
-//		}
-		for(int i = 0; i < minimumHeap.length; i++){
-			output+= minimumHeap[i].getNodeName() + " ";
+		for(int i = 0; i < minHeap.size(); i++) {
+			output+= minHeap.get(i).getNodeName() + " ";
 		}
 
 		return output;

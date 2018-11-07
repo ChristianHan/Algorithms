@@ -76,14 +76,12 @@ public class Graph {
 ///////////////////////////////////////////////////////////////////////////////
 
   public Heap getHeap() {
-    Heap minimumHeap = new Heap(vertices.size());
-    minimumHeap.buildHeap(vertices);
-    //return minimumHeap;
-
-    minHeap = minimumHeap;
-    return minHeap;
     //minHeap.buildHeap(vertices);
-    //return minHeap;
+//    for(Node n:vertices){
+//        minHeap.insertNode(n);
+//    }
+    //minHeap.extractMin();
+    return minHeap;
   }
     
   public ArrayList<Node> getAllNodes(){
