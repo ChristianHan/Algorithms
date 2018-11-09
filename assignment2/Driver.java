@@ -99,6 +99,31 @@ public class Driver {
   public static void testRun() {
 		if (testDijkstra) {
 			System.out.println(testGraph);
+			ArrayList<Node> nodeList = testGraph.getAllNodes();
+			Node root = nodeList.get(0);
+			Node x = nodeList.get(0);
+
+			/* tests findShortestPathLength */
+//			System.out.print("The shortest path length is: ");
+//			System.out.println(testGraph.findShortestPathLength(root, x));
+
+
+			/* tests findAShortestPath */
+//			ArrayList<Node> testPath = new ArrayList<>();
+//			testPath = testGraph.findAShortestPath(root, x);
+//			System.out.print("The shortest path is: ");
+//			for(int i = 0; i < testPath.size(); i++){
+//				System.out.print(testPath.get(i).getNodeName() + " ");
+//			}
+
+//			ArrayList<Node> testPathAll = new ArrayList<>();
+//			testPathAll = testGraph.findEveryShortestPathLength(root);
+//			System.out.println("Vertex   Distance from Source");
+//			for(int i = 0; i < testPathAll.size(); i++){
+//				System.out.println(testPathAll.get(i).getNodeName() + "        " + testPathAll.get(i).getMinDistance());
+//
+//			}
+
 		}
 
 		if (testHeap) {

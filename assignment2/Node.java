@@ -9,12 +9,22 @@ public class Node {
   private int nodeName;
   private ArrayList<Node> neighbors;
   private ArrayList<Integer> weights;
-	
+
+  /* my variables */
+  public int parent;
+  public ArrayList<Node> parentArray;
+  public boolean visited;
+  
   public Node(int x) {
 	nodeName = x;
 	minDistance = Integer.MAX_VALUE;
 	neighbors = new ArrayList<Node>();
 	weights = new ArrayList<Integer>();
+
+	/* my variables */
+	parent = -1;
+	parentArray = new ArrayList<Node>();
+	visited = false;
   }
 	
   public void setNeighborAndWeight(Node n, Integer w) {

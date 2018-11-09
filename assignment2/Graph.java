@@ -1,25 +1,62 @@
 package assignment2;
+
 import java.util.ArrayList;
-import java.util.*;
 
 public class Graph {
 	private ArrayList<Node> vertices; //this is a list of all vertices, populated by Driver class.
 	private Heap minHeap; 	//this is the heap to use for Dijkstra
+
+    public ArrayList<Node> path;//used to return the minPath if it exists
+
 	public Graph(int numVertices) {
 		minHeap = new Heap();
 		vertices = new ArrayList<Node>();
     // feel free to add anything else you may want
+        path = new ArrayList<Node>();
 	}
-
-
 
   // findShortestPathLength
   //
   // Returns the distance of the shortest path from root to x
   public int findShortestPathLength(Node root, Node x) {
 
-	  
-	  return 0;
+	    /* initialization */
+      //TODO: I think this initialization is already done for us in constructor?
+	    for(Node vertex: vertices){
+	        vertex.setMinDistance(Integer.MAX_VALUE);
+	        vertex.parent = -1;
+        }
+
+        //ArrayList<Node> path = new ArrayList<Node>();
+        root.setMinDistance(0);
+
+	    minHeap.buildHeap(vertices);
+	    while(!minHeap.isEmpty()){
+
+	        Node min = minHeap.findMin();
+	        min.visited = true;
+
+            ArrayList<Integer> weights = min.getWeights();
+            ArrayList<Node> neighbors = min.getNeighbors();
+
+	        for(int i = 0; i < min.getNeighbors().size(); i++){
+	            Node neighbor = neighbors.get(i);
+	            if(!neighbor.visited){ //can only check on nonvisited nodes
+
+                    int combined_distance = min.getMinDistance() + weights.get(i);
+                    if(combined_distance < neighbor.getMinDistance()){
+                        neighbor.setMinDistance(combined_distance);
+                        neighbor.parentArray.add(min);
+                    }
+                }
+            }
+            minHeap.extractMin();
+        }
+        //how do i check for unreachable
+      if(x.getMinDistance() == Integer.MAX_VALUE){
+	        return -1;
+      }
+	  return x.getMinDistance();
   }
 
   // findAShortestPath
@@ -27,9 +64,24 @@ public class Graph {
   // Returns a list of nodes represent one of the shortest paths
   // from root to x
   public ArrayList<Node> findAShortestPath(Node root, Node x){
-	  
-	  
-	  return null;
+	    int pathlength = findShortestPathLength(root,x);
+	    if(pathlength == -1){
+	        return null;
+        }
+        if(root == x){
+            return null;
+        }
+	    Node child = x;
+	    while(child.parentArray.get(0) != x ){
+	        path.add(0,child);
+	        child = child.parentArray.get(0);
+	        if(child == root){
+	            path.add(0,root);
+	            break;
+            }
+        }
+
+	  return path;
   }
 
   // eachShortestPathLength
@@ -39,7 +91,14 @@ public class Graph {
   // should contain every Node in the graph. Note that 
   // root.getMinDistance() = 0
   public ArrayList<Node> findEveryShortestPathLength(Node root) {
-	  return null;
+	    ArrayList<Node> everyPath = new ArrayList<>();
+	    everyPath.addAll(vertices);
+
+	    for(int i = 0; i < everyPath.size(); i++){
+	        int distance = findShortestPathLength(root, everyPath.get(i));
+	        everyPath.get(i).setMinDistance(distance);
+        }
+      return everyPath;
   }
   
   //returns edges and weights in a string.
@@ -76,7 +135,7 @@ public class Graph {
 ///////////////////////////////////////////////////////////////////////////////
 
   public Heap getHeap() {
-    //minHeap.buildHeap(vertices);
+    //sminHeap.buildHeap(vertices);
 //    for(Node n:vertices){
 //        minHeap.insertNode(n);
 //    }

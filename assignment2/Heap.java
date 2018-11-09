@@ -55,7 +55,6 @@ public class Heap {
   // Node's minDistance
   //
   // Time Complexity Requirement: theta(n)
-  // need to call heapify down
 	public void buildHeap(ArrayList<Node> nodes) {
 		minHeap = nodes;
 		size = minHeap.size();
@@ -68,16 +67,12 @@ public class Heap {
   // Insert a Node into the heap
   // Time Complexity Requirement: theta(log(n))
 	public void insertNode(Node in) {
-
 		size = size + 1;
-
 		minHeap.add(in);
-
 		heapifyUp();
 	}
 
 	public void heapifyUp(){
-
 		int index = size - 1;
 
 		while(hasParent(index) && minHeap.get(parent(index)).getMinDistance() > minHeap.get(index).getMinDistance()){
@@ -104,6 +99,8 @@ public class Heap {
 			if(hasRightChild(index) && minHeap.get(right(index)).getMinDistance() < minHeap.get(left(index)).getMinDistance()){
 				smallerChild = right(index);
 			}
+
+			/*  */
 			if(minHeap.get(index).getMinDistance() > minHeap.get(smallerChild).getMinDistance()){
 				nodeSwap(index,smallerChild);
 				index = smallerChild;
