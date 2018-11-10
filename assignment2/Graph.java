@@ -27,7 +27,6 @@ public class Graph {
 	        vertex.parent = -1;
         }
 
-        //ArrayList<Node> path = new ArrayList<Node>();
         root.setMinDistance(0);
 
 	    minHeap.buildHeap(vertices);
@@ -135,11 +134,7 @@ public class Graph {
 ///////////////////////////////////////////////////////////////////////////////
 
   public Heap getHeap() {
-    //sminHeap.buildHeap(vertices);
-//    for(Node n:vertices){
-//        minHeap.insertNode(n);
-//    }
-    //minHeap.extractMin();
+
     return minHeap;
   }
     
