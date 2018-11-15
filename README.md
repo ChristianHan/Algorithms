@@ -1,6 +1,4 @@
 # algorithms
 Algorithms (EE360) University of Texas at Austin
 
-Stable Matching
-
-Dijkstra's Algorithm
+Labs implementing Stable Matching and Dijkstra's Algorithm
