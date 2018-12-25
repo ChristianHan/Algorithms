@@ -116,14 +116,6 @@ public class Program3 extends AbstractProgram3 {
                 float opt_range = 0;
                 int opt_position = 0;
 
-                /*
-                int curGrade = gf.grade(i, k) + opt_grades_list[i-1][j-k];
-                    if (curGrade > opt_grade   &&   curGrade < maxGrade) {
-                        opt_grade = curGrade;
-                        opt_hours = k;
-                    }
-                 */
-
                 for(int k = 0; k < j; k++){
                     currentRange = (housePositions.get(j) - housePositions.get(j-k))/2;
                     previousRange = optAntennaRange[i-1][j-k-1];
